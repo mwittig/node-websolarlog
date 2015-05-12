@@ -1,14 +1,19 @@
 {
   "name": "node-websolarlog",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Access PV live logs from WebSolarLog in Node.",
   "author": {
     "name": "Marcus Wittig",
     "url": "https://github.com/mwittig/node-websolarlog"
   },
+  "contributors": [
+    {
+      "name": "Marcus Wittig",
+      "url": "https://github.com/mwittig"
+    }
+  ],
   "main": "index",
   "homepage": "https://github.com/mwittig/node-websolarlog",
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/mwittig/node-websolarlog"
@@ -16,6 +21,12 @@
   "bugs": {
     "url": "https://github.com/mwittig/node-websolarlog/issues"
   },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/mwittig/node-websolarlog/blob/master/LICENSE"
+    }
+  ],
   "keywords": [
     "WebSolarLog",
     "Photovoltaics",
@@ -25,7 +36,11 @@
     "Monitoring"
   ],
   "dependencies": {
-    "bluebird": "^2.9.24",
-    "lodash": "^3.6.0"
+    "bluebird": ">=2.9.24",
+    "lodash": ">=3.6.0"
+  },
+  "engines": {
+    "node": ">0.8.x",
+    "npm": ">1.1.x"
   }
 }

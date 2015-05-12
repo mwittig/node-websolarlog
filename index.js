@@ -1,5 +1,6 @@
 var util = require('util'),
     http = require('http'),
+    https = require('https'),
     _ = require('lodash'),
     Promise = require('bluebird'),
     lastRequest = Promise.resolve(),
@@ -16,13 +17,14 @@ function consoleDebug() {
 
 function getRequest(options) {
     var requestOptions = _.assign({
-        port: 80,
-        path: '/api.php/Live',
-        headers: {},
-        method: 'GET'
-    }, options);
+            timeout: 20000,
+            protocol: 'http:',
+            path: '/api.php/Live',
+            headers: {},
+            method: 'GET'
+        }, options),
+        timeoutOccurred = false;
 
-    // FIXME: Check option properties
     requestOptions.headers['Host'] = requestOptions.host;
     if (!_.isUndefined(requestOptions.username) && !_.isUndefined(requestOptions.password)) {
         requestOptions.headers['Authorization'] =
@@ -33,7 +35,8 @@ function getRequest(options) {
 
     return new Promise(function (resolve, reject) {
         var data = "",
-            getReq = http.request(requestOptions, function (response) {
+            proto = (requestOptions.protocol == 'https:') ? https : http,
+            getReq = proto.request(requestOptions, function (response) {
                 debug('STATUS: ' + response.statusCode);
                 debug('HEADERS: ' + JSON.stringify(response.headers));
 
@@ -60,9 +63,17 @@ function getRequest(options) {
                     return resolve(json);
                 });
             }).on('error', function (error) {
+                if (timeoutOccurred) {
+                    error = new Error("Request timeout occurred - request aborted");
+                }
                 debug('ERROR:' + 'Host ' + requestOptions.host + ' ' + error);
+                getReq.abort();
                 return reject(error);
+            }).on('timeout', function () {
+                timeoutOccurred = true;
+                getReq.abort();
             });
+        getReq.setTimeout(requestOptions.timeout);
         getReq.end();
     });
 }

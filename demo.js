@@ -1,4 +1,5 @@
 var wsl = require('./index'),
+    util = require('util'),
     options = {
         host: 'diehl-inverter-demo.websolarlog.com',
         name: 'Diehl'
@@ -6,11 +7,11 @@ var wsl = require('./index'),
     x = Date.now();
 
 wsl.getProductionDeviceData(options).then(function (json) {
-    console.log(json);
-    console.log(Date.now() - x, "milliseconds ellapsed")
+    console.log(util.inspect(json, { depth: 4, colors : true }));
+    console.log(Date.now() - x, "milliseconds elapsed")
 }).catch(function(e) {console.log(e)});
 
 wsl.getProductionTotals(options).then(function (json) {
-    console.log(json);
-    console.log(Date.now() - x, "milliseconds ellapsed")
+    console.log(util.inspect(json, { depth: 4, colors : true }));
+    console.log(Date.now() - x, "milliseconds elapsed")
 }).catch(function(e) {console.log(e)});
