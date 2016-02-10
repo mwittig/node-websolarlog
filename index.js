@@ -59,8 +59,15 @@ function getRequest(options) {
                 });
                 response.on('end', function () {
                     debug("END");
-                    var json = JSON.parse(data);
-                    return resolve(json);
+                    try {
+                        var json = JSON.parse(data);
+                        return resolve(json);
+                    }
+                    catch (e) {
+                        var error = new Error("Invalid response body: " + e.toString());
+                        debug('ERROR:' + 'Host ' + requestOptions.host + ' ' + error);
+                        return reject(error);
+                    }
                 });
             }).on('error', function (error) {
                 if (timeoutOccurred) {
