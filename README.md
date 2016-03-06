@@ -40,3 +40,7 @@ Access PV live logs from WebSolarLog in Node.
     * Revised license information to provide a SPDX 2.0 license identifier in consonance with npm v2.1 guidelines on 
       license metadata - see also https://github.com/npm/npm/releases/tag/v2.10.0
     * Dependency updates
+    
+* 20160306, V0.0.4
+    * Replaced deprecated use of Promise.settle()
+    * Dependency updates

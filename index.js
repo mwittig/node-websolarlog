@@ -15,6 +15,10 @@ function consoleDebug() {
     console.log.apply(this, arguments)
 }
 
+function settlePromise(aPromise) {
+    return aPromise.reflect();
+}
+
 function getRequest(options) {
     var requestOptions = _.assign({
             timeout: 20000,
@@ -117,7 +121,7 @@ function checkRequiredProperties(options, requiredPropsArray) {
 
 module.exports.getJSON = function (options) {
     return checkRequiredProperties(options, ['host']).then(function () {
-        return lastRequest = Promise.settle([lastRequest]).then(function () {
+        return lastRequest = settlePromise(lastRequest).then(function () {
             return getRequest(options).then(function (json) {
                 return Promise.resolve(json);
             })
@@ -127,7 +131,7 @@ module.exports.getJSON = function (options) {
 
 module.exports.getProductionDeviceData = function (options) {
     return checkRequiredProperties(options, ['host', 'name']).then(function () {
-        return lastRequest = Promise.settle([lastRequest]).then(function () {
+        return lastRequest = settlePromise(lastRequest).then(function () {
             return getRequest(options).then(function (json) {
                 var result = getDeviceDataObject(options.name, "production", json);
                 if (!_.isUndefined(result)) {
@@ -143,7 +147,7 @@ module.exports.getProductionDeviceData = function (options) {
 
 module.exports.getProductionTotals = function (options) {
     return checkRequiredProperties(options, ['host']).then(function () {
-        return lastRequest = Promise.settle([lastRequest]).then(function () {
+        return lastRequest = settlePromise(lastRequest).then(function () {
             return getRequest(options).then(function (json) {
                 var result = getTotalsObjectForType("production", json);
                 if (!_.isUndefined(result)) {
