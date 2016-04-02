@@ -25,22 +25,12 @@ Access PV live logs from WebSolarLog in Node.
         console.log(json);
     }).catch(function(e) {console.log(e)});
 
-## History
+## Release History
 
-* 20150417, V0.0.1
-    * Initial Version
+See [Release History](https://github.com/mwittig/node-websolarlog/blob/master/HISTORY.md).
 
-* 20150512, V0.0.2
-    * Added support for HTTPS, added rejectUnauthorized: false to allow self-signed server certs. Should be set to true
-      if server has a certificate signed from a trusted CA
-    * Added timeout-handling for requests to abort request server doesn't send a response
-    
-* 20160210, V0.0.3
-    * Added error handling for invalid JSON returned with response
-    * Revised license information to provide a SPDX 2.0 license identifier in consonance with npm v2.1 guidelines on 
-      license metadata - see also https://github.com/npm/npm/releases/tag/v2.10.0
-    * Dependency updates
-    
-* 20160306, V0.0.4
-    * Replaced deprecated use of Promise.settle()
-    * Dependency updates
+## License
+
+Copyright (c) 2016, Marcus Wittig and contributors. All rights reserved.
+
+[MIT License](https://github.com/mwittig/node-websolarlog/blob/master/LICENSE).
