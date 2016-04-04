@@ -1,7 +1,8 @@
 var util = require('util'),
     http = require('http'),
     https = require('https'),
-    _ = require('lodash'),
+    assign = require('lodash.assign'),
+    isUndefined = require('lodash.isundefined'),
     Promise = require('bluebird'),
     lastRequest = Promise.resolve(),
     debug = process.env.hasOwnProperty('WSL_DEBUG') ? consoleDebug : function () {
@@ -20,7 +21,7 @@ function settlePromise(aPromise) {
 }
 
 function getRequest(options) {
-    var requestOptions = _.assign({
+    var requestOptions = assign({
             timeout: 20000,
             protocol: 'http:',
             path: '/api.php/Live',
@@ -30,7 +31,7 @@ function getRequest(options) {
         timeoutOccurred = false;
 
     requestOptions.headers['Host'] = requestOptions.host;
-    if (!_.isUndefined(requestOptions.username) && !_.isUndefined(requestOptions.password)) {
+    if (!isUndefined(requestOptions.username) && !isUndefined(requestOptions.password)) {
         requestOptions.headers['Authorization'] =
             "Basic " + new Buffer(requestOptions.username + ":" + requestOptions.password).toString("base64");
     }
@@ -100,7 +101,7 @@ function getDeviceDataObject(name, type, json) {
 
 function getTotalsObjectForType(type, json) {
     if (json.hasOwnProperty("totals")) {
-        if ((!_.isUndefined(json.totals)) && (!_.isUndefined(json.totals[type]))) {
+        if ((!isUndefined(json.totals)) && (!isUndefined(json.totals[type]))) {
             return json.totals[type]
         }
     }
@@ -108,7 +109,7 @@ function getTotalsObjectForType(type, json) {
 
 function checkRequiredProperties(options, requiredPropsArray) {
     for (var i = 0; i < requiredPropsArray.length; ++i) {
-        if (_.isUndefined(options[requiredPropsArray[i]])) {
+        if (isUndefined(options[requiredPropsArray[i]])) {
             return Promise.reject("Request options lacks required property=" + requiredPropsArray[i]);
         }
     }
@@ -134,7 +135,7 @@ module.exports.getProductionDeviceData = function (options) {
         return lastRequest = settlePromise(lastRequest).then(function () {
             return getRequest(options).then(function (json) {
                 var result = getDeviceDataObject(options.name, "production", json);
-                if (!_.isUndefined(result)) {
+                if (!isUndefined(result)) {
                     return Promise.resolve(result);
                 }
                 else {
@@ -150,7 +151,7 @@ module.exports.getProductionTotals = function (options) {
         return lastRequest = settlePromise(lastRequest).then(function () {
             return getRequest(options).then(function (json) {
                 var result = getTotalsObjectForType("production", json);
-                if (!_.isUndefined(result)) {
+                if (!isUndefined(result)) {
                     return Promise.resolve(result);
                 }
                 else {
