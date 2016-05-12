@@ -1,6 +1,6 @@
 {
   "name": "node-websolarlog",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Access PV live logs from WebSolarLog in Node.",
   "author": {
     "name": "Marcus Wittig",
