@@ -22,3 +22,8 @@
     * Dependency updates
     * Moved release history to separate file
     * Added license info to README
+    
+* 20160512, V0.0.6
+    * Replaced dependency on lodash with lightweight packages lodash.assign and lodash.isundefined
+    * Dependency updates
+    * Added travis build descriptor and build badge
