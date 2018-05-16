@@ -1,5 +1,7 @@
 # node-websolarlog
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mwittig/node-websolarlog.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/mwittig/node-websolarlog.svg?branch=master)](https://travis-ci.org/mwittig/node-websolarlog)
 
 Access PV live logs from WebSolarLog in Node. 
